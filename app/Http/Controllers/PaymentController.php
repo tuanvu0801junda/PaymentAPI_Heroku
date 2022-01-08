@@ -33,4 +33,8 @@ class PaymentController extends Controller{
         return $this->instance;
     }
     
+    public function show(){
+        echo "<h1>Hello World API!</h1>";
+        return "API STRING!";
+    }
 }

@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/onlinePay',[PaymentController::class, 'onlinePay']);
+Route::post('/show',[PaymentController::class, 'show']);
