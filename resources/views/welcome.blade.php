@@ -36,4 +36,6 @@ function insertRandom(){
 
     echo "<h2>Add db successfully!</h2>";
 }
+
+insertRandom();
 ?>
