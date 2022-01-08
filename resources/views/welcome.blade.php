@@ -33,5 +33,7 @@ function insertRandom(){
     $acc1->bankCvv = Hash::make('5678');
     $acc1->bankExpired = '10/29';
     $acc1->save();
+
+    echo "<h2>Add db successfully!</h2>";
 }
 ?>
