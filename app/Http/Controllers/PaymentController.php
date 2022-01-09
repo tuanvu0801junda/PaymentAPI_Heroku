@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use BankPayFactory;
-use ViettelPayFactory;
-use ZaloPayFactory;
-use IPaymentFactory;
+use App\Http\Factory\BankPayFactory;
+use App\Http\Factory\ViettelPayFactory;
+use App\Http\Factory\ZaloPayFactory;
+use App\Http\Factory\IPaymentFactory;
 
 class PaymentController extends Controller{
     private $instance;
     private $records;
 
-    private function __construct() {
+    private function setRecords() {
         $this->records['bank'] = new BankPayFactory();
         $this->records['viettel'] = new ViettelPayFactory();
         $this->records['zalo'] = new ZaloPayFactory();
     }
 
     public function onlinePay(Request $request){
+        $this->setRecords();
         $factory = $this->getFactoryWithType($request->input('type'));
         $account = $factory->createObjectFromRequest();
         return $account->subtract($request);
@@ -34,7 +35,9 @@ class PaymentController extends Controller{
     }
     
     public function show(){
-        echo "<h1>Hello World API!</h1>";
-        return "API STRING!";
+        return response()->json([
+            'type' => 'payment',
+            'status' => 'almost done'
+        ]);
     }
 }
