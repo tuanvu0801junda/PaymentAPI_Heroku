@@ -21,7 +21,7 @@ class ViettelPay implements IPayment{
                 'status' => 406,
                 'message' => 'Password Incorrect!'
             ]);
-        } else return $account;
+        } else return $account->viettelBalance;
     }
 
     public function subtract(Request $request){
@@ -47,8 +47,7 @@ class ViettelPay implements IPayment{
     }
 
     public function getBalance(Request $request){
-        $account = $this->authenticate($request);
-        return $account->viettelBalance;
+        return $this->authenticate($request);
     }
 }
 ?>
