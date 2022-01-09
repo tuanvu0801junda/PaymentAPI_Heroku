@@ -6,18 +6,6 @@ use App\Models\ViettelAcc;
 use Illuminate\Support\Facades\Hash;
 
 function insertData(){
-    $acc1 = new ZaloAcc();
-    $acc1->zaloPhone = '0123789456';
-    $acc1->zaloPassword = Hash::make('abcxyz');
-    $acc1->zaloBalance = 1600000;
-    $acc1->save();
-
-    $acc1 = new ViettelAcc();
-    $acc1->viettelPhone = '0123789456';
-    $acc1->viettelPassword = Hash::make('abcxyz');
-    $acc1->viettelBalance = 1600000;
-    $acc1->save();
-
     $acc1 = new BankAcc();
     $acc1->bankCard = '123567';
     $acc1->bankName = 'HuongVi_HoangMinh';
