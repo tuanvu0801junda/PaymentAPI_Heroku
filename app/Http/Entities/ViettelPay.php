@@ -27,17 +27,17 @@ class ViettelPay implements IPayment{
         if ($balance == -1){
             return response()->json([
                 'status' => 404,
-                'message' => 'Account Not Exist',
+                'message' => 'ViettelPay Account Not Exist',
             ]);
         } else if ($balance == -2){
             return response()->json([
                 'status' => 406,
-                'message' => 'Password or Phone number Incorrect!'
+                'message' => 'ViettelPay Password Incorrect!'
             ]);
         } else if ($balance < $moneyAmount){
             return response()->json([
                 'status' => 137,
-                'message' => 'Balance not enough!'
+                'message' => 'ViettelPay Balance not enough!'
             ]);
         } else {
             $balance = $balance - $moneyAmount;
@@ -46,7 +46,7 @@ class ViettelPay implements IPayment{
             $account->update();
             return response()->json([
                 'status' => 200,
-                'message' => 'Payment executed successfully!'
+                'message' => 'Payment by ViettelPay executed successfully!'
             ]);
         }
     }

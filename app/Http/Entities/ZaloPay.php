@@ -11,28 +11,33 @@ class ZaloPay implements IPayment{
         $inputPassword = $request->input('password');
 
         $account = ZaloAcc::where('zaloPhone',$inputPhone)->first();
-        if ($account == null){
-            return response()->json([
-                'status' => 404,
-                'message' => 'Account Not Exist',
-            ]);
-        } else if (Hash::check($inputPassword,$account->zaloPassword) == false){
-            return response()->json([
-                'status' => 406,
-                'message' => 'Password Incorrect!'
-            ]);
-        } else return $account;
+        if ($account == null) return -1;
+        else if (Hash::check($inputPassword,$account->zaloPassword) == false) return -2;
+        else return $account->zaloBalance;
     }
 
     public function subtract(Request $request){
         $moneyAmount = $request->input('money');
         
-        //errorCode 137: Not enough
+        // errorCode 137: Not enough | 
+        // errorCode 404: Not found  | 
+        // errorCode 406: incorrect  | 
+        
         $balance = $this->getBalance($request);
-        if ($balance < $moneyAmount){
+        if($balance == -1){
+            return response()->json([
+                'status' => 404,
+                'message' => 'ZaloPay Account Not Exist',
+            ]);
+        } else if ($balance == -2){
+            return response()->json([
+                'status' => 406,
+                'message' => 'ZaloPay Password Incorrect!'
+            ]);
+        } else if ($balance < $moneyAmount){
             return response()->json([
                 'status' => 137,
-                'message' => 'Balance not enough!'
+                'message' => 'ZaloPay Balance not enough!'
             ]);
         } else {
             $balance = $balance - $moneyAmount;
@@ -41,14 +46,13 @@ class ZaloPay implements IPayment{
             $account->update();
             return response()->json([
                 'status' => 200,
-                'message' => 'Payment executed successfully!'
+                'message' => 'Payment by ZaloPay executed successfully!'
             ]);
         }
     }
     
     public function getBalance(Request $request){
-        $account = $this->authenticate($request);
-        return $account->zaloBalance;
+        return $this->authenticate($request);
     }
 }
 ?>
