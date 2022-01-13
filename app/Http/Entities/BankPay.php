@@ -20,14 +20,15 @@ class BankPay implements IPayment{
         else if (strcmp($inputExpired,$account->bankExpired) != 0) return -4;
         else return $account->bankBalance;
     }
-
     
     public function subtract(Request $request){
         $moneyAmount = $request->input('money');
         
         // errorCode 137: Not enough | 
         // errorCode 404: Not found  | 
-        // errorCode 406: incorrect  | 
+        // errorCode 4061: Bank Cvv Code Incorrect  | 
+        // errorCode 4062: Name of Card Owner Incorrect  | 
+        // errorCode 4063: Bank ExpiredDate Incorrect  | 
 
         $balance = $this->getBalance($request);
         if($balance == -1){
@@ -37,17 +38,17 @@ class BankPay implements IPayment{
             ]);
         } else if ($balance == -2){
             return response()->json([
-                'status' => 406, 
+                'status' => 4061, 
                 'message' => 'Bank Cvv Code Incorrect!',
             ]);
         } else if ($balance == -3){
             return response()->json([
-                'status' => 406,
+                'status' => 4062,
                 'message' => 'Name of Bank Card Owner Incorrect!',
             ]);
         } else if ($balance == -4){
             return response()->json([
-                'status' => 406,
+                'status' => 4063,
                 'message' => 'Bank ExpiredDate Incorrect!'
             ]);            
         } else if ($balance < $moneyAmount){
