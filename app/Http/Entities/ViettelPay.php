@@ -6,6 +6,7 @@ use App\Models\ViettelAcc;
 use Illuminate\Support\Facades\Hash;
 
 class ViettelPay implements IPayment{
+
     public function authenticate(Request $request){
         $inputPhone = $request->input('phone');
         $inputPassword = $request->input('password');

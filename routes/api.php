@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/onlinePay',[PaymentController::class, 'onlinePay']);
 Route::post('/show',[PaymentController::class, 'show']);
+
+Route::post('/subtractNumber',[ProductController::class,'subtractNumber']);
