@@ -7,5 +7,10 @@ interface IPayment{
     function authenticate(Request $request);
     function subtract(Request $request);
     function getBalance(Request $request);
+
+    // ************** NEW FUNCTION FOR BODY RAW REQUEST (BRR) **************
+    function authenticateBRR(Request $request);
+    function subtractBRR(Request $request);
+    function getBalanceBRR(Request $request);
 }
 ?>

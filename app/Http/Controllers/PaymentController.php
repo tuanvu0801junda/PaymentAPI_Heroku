@@ -25,6 +25,13 @@ class PaymentController extends Controller{
         return $account->subtract($request);
     }
 
+    public function onlinePayBRR(Request $request){
+        $this->setRecords();
+        $factory = $this->getFactoryWithType($request->type);
+        $account = $factory->createObjectFromRequest();
+        return $account->subtractBRR($request);
+    }
+
     public function getFactoryWithType($type): IPaymentFactory{
         return $this->records[$type];
     }

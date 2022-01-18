@@ -20,7 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/ver2/onlinePay',[PaymentController::class, 'onlinePayBRR']);
 Route::post('/onlinePay',[PaymentController::class, 'onlinePay']);
+
 Route::post('/show',[PaymentController::class, 'show']);
 
 Route::post('/subtractNumber',[ProductController::class,'subtractNumber']);
