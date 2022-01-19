@@ -139,5 +139,35 @@ class BankPay implements IPayment{
     public function getBalanceBRR(Request $request){
         return $this->authenticateBRR($request);
     }
+
+    public function validateCard(Request $request){
+        $check = $this->authenticateBRR($request);
+        if($check == -1){
+            return response()->json([
+                'status' => 404,
+                'message' => 'Bank CardId Not Exist!'
+            ]);
+        } else if ($check == -2){
+            return response()->json([
+                'status' => 4061, 
+                'message' => 'Bank Cvv Code Incorrect!',
+            ]);
+        } else if ($check == -3){
+            return response()->json([
+                'status' => 4062,
+                'message' => 'Name of Bank Card Owner Incorrect!',
+            ]);
+        } else if ($check == -4){
+            return response()->json([
+                'status' => 4063,
+                'message' => 'Bank ExpiredDate Incorrect!'
+            ]);            
+        } else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'BankPay Account validated successfully!'
+            ]);
+        }
+    }
 }
 ?>

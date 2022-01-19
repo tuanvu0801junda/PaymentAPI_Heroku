@@ -12,5 +12,8 @@ interface IPayment{
     function authenticateBRR(Request $request);
     function subtractBRR(Request $request);
     function getBalanceBRR(Request $request);
+
+    // ************** NEW FUNCTION FOR VALIDATING CARD **************
+    function validateCard(Request $request);
 }
 ?>

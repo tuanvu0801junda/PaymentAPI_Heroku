@@ -32,6 +32,13 @@ class PaymentController extends Controller{
         return $account->subtractBRR($request);
     }
 
+    public function validateBeforePay(Request $request){
+        $this->setRecords();
+        $factory = $this->getFactoryWithType($request->type);
+        $account = $factory->createObjectFromRequest();
+        return $account->validateCard($request);
+    }
+
     public function getFactoryWithType($type): IPaymentFactory{
         return $this->records[$type];
     }

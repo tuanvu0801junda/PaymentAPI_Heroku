@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/ver2/onlinePay',[PaymentController::class, 'onlinePayBRR']);
 Route::post('/onlinePay',[PaymentController::class, 'onlinePay']);
+Route::post('/validate',[PaymentController::class, 'validateBeforePay']);
 
 Route::post('/show',[PaymentController::class, 'show']);
 

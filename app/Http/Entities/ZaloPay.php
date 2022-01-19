@@ -105,5 +105,26 @@ class ZaloPay implements IPayment{
     public function getBalanceBRR(Request $request){
         return $this->authenticateBRR($request);
     }
+
+    // ************** NEW FUNCTION FOR VALIDATING CARD **************
+    public function validateCard(Request $request){
+        $check = $this->authenticateBRR($request);
+        if ($check == -1){
+            return response()->json([
+                'status' => 404,
+                'message' => 'ZaloPay Account Not Exist',
+            ]);
+        } else if ($check == -2){
+            return response()->json([
+                'status' => 406,
+                'message' => 'ZaloPay Password Incorrect!'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 200,
+                'message' => 'ZaloPay Account validated successfully!'
+            ]);
+        }
+    }
 }
 ?>
