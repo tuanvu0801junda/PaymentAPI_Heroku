@@ -1,16 +1,14 @@
 <?php
-
-namespace App\Http\Entities;
-use Illuminate\Http\Request;
 use App\Models\BankAcc;
 use Illuminate\Support\Facades\Hash;
 
-class BankParamAuth implements IParamAuthenticator{
-    public function authenticate(Request $request){
-        $inputCard = $request->input('card');
-        $inputName = $request->input('name');
-        $inputCvv = $request->input('cvv');
-        $inputExpired = $request->input('expired');
+class BankAuth implements IAuth{
+
+    public static function authenticate($array){
+        $inputCard = $array['card'];
+        $inputName = $array['name'];
+        $inputCvv = $array['cvv'];
+        $inputExpired = $array['expired'];
 
         $account = BankAcc::where('bankCard',$inputCard)->first();
 
@@ -20,9 +18,6 @@ class BankParamAuth implements IParamAuthenticator{
         else if (strcmp($inputExpired,$account->bankExpired) != 0) return -4;
         else return $account->bankBalance;
     }
-
-    public function getBalance(Request $request){
-        return $this->authenticate($request);
-    }
 }
+
 ?>

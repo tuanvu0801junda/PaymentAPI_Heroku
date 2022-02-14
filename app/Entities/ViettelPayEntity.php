@@ -1,21 +1,26 @@
 <?php
-
-namespace App\Http\Entities;
+use App\Http\Controllers\IPayEntity;
 use Illuminate\Http\Request;
 use App\Models\ViettelAcc;
-use Illuminate\Support\Facades\Hash;
 
-class ViettelPayBRR implements IBRRPayment{
+class ViettelPayEntity extends IPayEntity{
+    private $phone;
+    private $password;
+    
+    public function setPhone($phone){
+        $this->phone = $phone;
+    }
 
-    public function subtractBRR(Request $request){
-        $moneyAmount = $request->money;
-        
+    public function setPassword($password){
+        $this->password = $password;
+    }
+
+    public function subtract(Request $request){
         // errorCode 137: Not enough | 
         // errorCode 404: Not found  | 
         // errorCode 406: incorrect  | 
-        
-        $vietAuth = new ViettelBRRAuth();
-        $balance = $vietAuth->getBalanceBRR($request);
+
+        $balance = $this->getBalance();
         if ($balance == -1){
             return response()->json([
                 'status' => 404,
@@ -26,14 +31,14 @@ class ViettelPayBRR implements IBRRPayment{
                 'status' => 406,
                 'message' => 'ViettelPay Password Incorrect!'
             ]);
-        } else if ($balance < $moneyAmount){
+        } else if ($balance < $this->money){
             return response()->json([
                 'status' => 137,
                 'message' => 'ViettelPay Balance not enough!'
             ]);
         } else {
-            $balance = $balance - $moneyAmount;
-            $account = ViettelAcc::where('viettelPhone',$request->phone)->first();
+            $balance = $balance - $this->money;
+            $account = ViettelAcc::where('viettelPhone', $this->phone)->first();
             $account->viettelBalance = $balance;
             $account->update();
             return response()->json([
@@ -43,5 +48,18 @@ class ViettelPayBRR implements IBRRPayment{
         }
     }
 
+    public function encapsulate(){
+        return array(
+            'phone' => $this->phone,
+            'password' => $this->password
+        );
+    }
+
+    public function getBalance(){
+        $array = $this->encapsulate();
+        return ViettelAuth::authenticate($array);
+    }
 }
+
+
 ?>

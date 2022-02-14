@@ -1,21 +1,27 @@
 <?php
-
-namespace App\Http\Entities;
+use App\Http\Controllers\IPayEntity;
 use Illuminate\Http\Request;
 use App\Models\ZaloAcc;
-use Illuminate\Support\Facades\Hash;
 
-class ZaloPay implements IParamPayment{
+class ZaloPayEntity extends IPayEntity{
+
+    private $phone;
+    private $password;
+
+    public function setPhone($phone){
+        $this->phone = $phone;
+    }
+
+    public function setPassword($password){
+        $this->password = $password;
+    }
 
     public function subtract(Request $request){
-        $moneyAmount = $request->input('money');
-        
         // errorCode 137: Not enough | 
         // errorCode 404: Not found  | 
         // errorCode 406: incorrect  | 
-        
-        $zaloAuth = new ZaloParamAuth();
-        $balance = $zaloAuth->getBalance($request);
+
+        $balance = $this->getBalance();
         if($balance == -1){
             return response()->json([
                 'status' => 404,
@@ -26,14 +32,14 @@ class ZaloPay implements IParamPayment{
                 'status' => 406,
                 'message' => 'ZaloPay Password Incorrect!'
             ]);
-        } else if ($balance < $moneyAmount){
+        } else if ($balance < $this->money){
             return response()->json([
                 'status' => 137,
                 'message' => 'ZaloPay Balance not enough!'
             ]);
         } else {
-            $balance = $balance - $moneyAmount;
-            $account = ZaloAcc::where('zaloPhone',$request->input('phone'))->first();
+            $balance = $balance - $this->money;
+            $account = ZaloAcc::where('zaloPhone',$this->phone)->first();
             $account->zaloBalance = $balance;
             $account->update();
             return response()->json([
@@ -42,5 +48,19 @@ class ZaloPay implements IParamPayment{
             ]);
         }
     }
+
+    public function encapsulate(){
+        return array(
+            'phone' => $this->phone,
+            'password' => $this->password
+        );
+    }
+
+    public function getBalance(){
+        $array = $this->encapsulate();
+        return ZaloAuth::authenticate($array);
+    }
 }
+
+
 ?>

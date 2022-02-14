@@ -1,26 +1,39 @@
 <?php
-
-namespace App\Http\Entities\paramPay;
+use App\Http\Controllers\IPayEntity;
 use Illuminate\Http\Request;
 use App\Models\BankAcc;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Entities\IParamPayment;
-use App\Http\Entities\BankParamAuth;
 
+class BankPayEntity extends IPayEntity{
 
-class BankPay implements IParamPayment{
+    private $cvv;
+    private $expired;
+    private $name;
+    private $cardId;
+
+    public function setCvv($cvv){
+        $this->cvv = $cvv;
+    }
+
+    public function setExpiredDate($expired){
+        $this->expired = $expired;
+    }
+
+    public function setName($name){
+        $this->name = $name;
+    }
+
+    public function setCardId($cardId){
+        $this->cardId = $cardId;
+    }
 
     public function subtract(Request $request){
-        $moneyAmount = $request->input('money');
-        
-        // errorCode 137: Not enough | 
-        // errorCode 404: Not found  | 
-        // errorCode 4061: Bank Cvv Code Incorrect  | 
-        // errorCode 4062: Name of Card Owner Incorrect  | 
-        // errorCode 4063: Bank ExpiredDate Incorrect  | 
+        // errorCode 137: Not enough 
+        // errorCode 404: Not found  
+        // errorCode 4061: Bank Cvv Code Incorrect  
+        // errorCode 4062: Name of Card Owner Incorrect  
+        // errorCode 4063: Bank ExpiredDate Incorrect  
 
-        $bankAuth = new BankParamAuth();
-        $balance = $bankAuth->getBalance($request);
+        $balance = $this->getBalance();
         if($balance == -1){
             return response()->json([
                 'status' => 404,
@@ -41,14 +54,14 @@ class BankPay implements IParamPayment{
                 'status' => 4063,
                 'message' => 'Bank ExpiredDate Incorrect!'
             ]);            
-        } else if ($balance < $moneyAmount){
+        } else if ($balance < $this->money){
             return response()->json([
                 'status' => 137,
                 'message' => 'Bank Balance not enough!'
             ]);
         } else {
-            $balance = $balance - $moneyAmount;
-            $account = BankAcc::where('bankCard',$request->input('card'))->first();
+            $balance = $balance - $this->money;
+            $account = BankAcc::where('bankCard', $this->cardId)->first();
             $account->bankBalance = $balance;
             $account->update();
             return response()->json([
@@ -58,5 +71,19 @@ class BankPay implements IParamPayment{
         }
     }
 
+    public function encapsulate(){
+        return array(
+            'cvv' => $this->cvv,
+            'name' => $this->name,
+            'expired' => $this->expired,
+            'card' => $this->cardId
+        );
+    }
+
+    public function getBalance(){
+        $array = $this->encapsulate();
+        return BankAuth::authenticate($array);
+    }
 }
+
 ?>
