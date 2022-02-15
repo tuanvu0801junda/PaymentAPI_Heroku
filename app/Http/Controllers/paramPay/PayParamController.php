@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\paramPay;
 use Illuminate\Http\Request;
 use App\Http\Factories\param\IParamFactory;
 use App\Http\Factories\param\ZaloParamFactory;
 use App\Http\Factories\param\ViettelParamFactory;
 use App\Http\Factories\param\BankParamFactory;
+use App\Http\Controllers\Controller;
 
 class PayParamController extends Controller implements IPayParamControl{
     

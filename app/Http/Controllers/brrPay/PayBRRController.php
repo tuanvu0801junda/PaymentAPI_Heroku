@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\brrPay;
 
 use Illuminate\Http\Request;
 use App\Http\Factories\brr\IBRRFactory;
 use App\Http\Factories\brr\BankBRRFactory;
 use App\Http\Factories\brr\ZaloBRRFactory;
 use App\Http\Factories\brr\ViettelBRRFactory;
+use App\Http\Controllers\brrPay\IPayBRRControl;
+use App\Http\Controllers\Controller;
 
 class PayBRRController extends Controller implements IPayBRRControl{
 
