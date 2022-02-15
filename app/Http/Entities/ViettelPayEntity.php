@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Entities;
-use App\Http\Entities\IPayEntity;
+use App\Http\Entities\AbstractPayEntity;
 use Illuminate\Http\Request;
 use App\Models\ViettelAcc;
 use App\Http\Authenticators\ViettelAuth;
 
-class ViettelPayEntity extends IPayEntity{
+class ViettelPayEntity extends AbstractPayEntity{
     private $phone;
     private $password;
     

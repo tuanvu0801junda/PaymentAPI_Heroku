@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Entities;
-use App\Http\Entities\IPayEntity;
+use App\Http\Entities\AbstractPayEntity;
 use Illuminate\Http\Request;
 use App\Models\ZaloAcc;
 use App\Http\Authenticators\ZaloAuth;
 
-class ZaloPayEntity extends IPayEntity{
+class ZaloPayEntity extends AbstractPayEntity{
 
     private $phone;
     private $password;

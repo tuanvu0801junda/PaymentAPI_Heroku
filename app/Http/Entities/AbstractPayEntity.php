@@ -4,7 +4,7 @@ namespace App\Http\Entities;
 
 use Illuminate\Http\Request;
 
-abstract class IPayEntity {
+abstract class AbstractPayEntity {
     protected $money;
 
     public function setMoney($money){

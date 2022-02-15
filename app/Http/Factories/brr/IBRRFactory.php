@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Factories\brr;
-use App\Http\Entities\IPayEntity;
 use Illuminate\Http\Request;
+use App\Http\Entities\AbstractPayEntity;
 
 interface IBRRFactory{
 
-    function createBRRObjectFromRequest(Request $request): IPayEntity;
+    function createBRRObjectFromRequest(Request $request): AbstractPayEntity;
 }
 ?>

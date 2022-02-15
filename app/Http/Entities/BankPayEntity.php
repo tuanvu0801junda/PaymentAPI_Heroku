@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Entities;
-use App\Http\Entities\IPayEntity;
+use App\Http\Entities\AbstractPayEntity;
 use Illuminate\Http\Request;
 use App\Models\BankAcc;
 use App\Http\Authenticators\BankAuth;
 
-class BankPayEntity extends IPayEntity{
+class BankPayEntity extends AbstractPayEntity{
 
     private $cvv;
     private $expired;
