@@ -21,7 +21,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Class Diagram with SOLID
+## Class Diagram with SOLID & Factory Design Pattern
 <p align="center">
 <img src="https://github.com/tuanvu0801junda/PaymentAPI_Heroku/blob/master/Payment_StructuredProgramming_SOLID_Perfect.png"></a>
 </p>
