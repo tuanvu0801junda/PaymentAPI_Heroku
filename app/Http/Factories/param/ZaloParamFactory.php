@@ -1,7 +1,9 @@
 <?php
 
+namespace App\Http\Factories\param;
+use App\Http\Entities\IPayEntity;
+use App\Http\Entities\ZaloPayEntity;
 use Illuminate\Http\Request;
-use App\Http\Controllers\IPayEntity;
 
 class ZaloParamFactory implements IParamFactory{
 

@@ -1,7 +1,9 @@
 <?php
 
+namespace App\Http\Factories\brr;
 use Illuminate\Http\Request;
-use App\Http\Controllers\IPayEntity;
+use App\Http\Entities\IPayEntity;
+use App\Http\Entities\ZaloPayEntity;
 
 class ZaloBRRFactory implements IBRRFactory{
     

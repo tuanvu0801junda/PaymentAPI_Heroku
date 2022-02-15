@@ -1,7 +1,8 @@
 <?php
-
+namespace App\Http\Factories\brr;
 use Illuminate\Http\Request;
-use App\Http\Controllers\IPayEntity;
+use App\Http\Entities\IPayEntity;
+use App\Http\Entities\BankPayEntity;
 
 class BankBRRFactory implements IBRRFactory{
     

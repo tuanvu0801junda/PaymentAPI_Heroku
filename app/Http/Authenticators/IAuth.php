@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Http\Request;
+namespace App\Http\Authenticators;
 
 interface IAuth{
 

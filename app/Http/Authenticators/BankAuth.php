@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Authenticators;
 use App\Models\BankAcc;
 use Illuminate\Support\Facades\Hash;
 

@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Authenticators;
 use App\Models\ZaloAcc;
 use Illuminate\Support\Facades\Hash;
 

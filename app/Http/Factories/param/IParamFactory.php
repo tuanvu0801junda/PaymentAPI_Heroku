@@ -1,6 +1,7 @@
 <?php
+namespace App\Http\Factories\param;
 use Illuminate\Http\Request;
-use App\Http\Controllers\IPayEntity;
+use App\Http\Entities\IPayEntity;
 
 interface IParamFactory{
 

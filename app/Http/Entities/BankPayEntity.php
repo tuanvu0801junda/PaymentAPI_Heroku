@@ -1,7 +1,9 @@
 <?php
-use App\Http\Controllers\IPayEntity;
+namespace App\Http\Entities;
+use App\Http\Entities\IPayEntity;
 use Illuminate\Http\Request;
 use App\Models\BankAcc;
+use App\Http\Authenticators\BankAuth;
 
 class BankPayEntity extends IPayEntity{
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Entities;
 
 use Illuminate\Http\Request;
 
 abstract class IPayEntity {
-    private $money;
+    protected $money;
 
     public function setMoney($money){
         $this->money = $money;

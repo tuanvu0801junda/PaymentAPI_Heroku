@@ -1,6 +1,7 @@
 <?php
+namespace App\Http\Factories\brr;
+use App\Http\Entities\IPayEntity;
 use Illuminate\Http\Request;
-use App\Http\Controllers\IPayEntity;
 
 interface IBRRFactory{
 

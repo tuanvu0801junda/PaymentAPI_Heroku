@@ -1,7 +1,10 @@
 <?php
-
+namespace App\Http\Factories\param;
 use Illuminate\Http\Request;
-use App\Http\Controllers\IPayEntity;
+use App\Http\Entities\IPayEntity;
+use App\Http\Entities\BankPayEntity;
+use App\Http\Factories\param\IParamFactory;
+
 
 class BankParamFactory implements IParamFactory{
 
